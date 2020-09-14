@@ -1,6 +1,5 @@
 <hr />
-<br />
-
+<p>Get Broker</p>
 <form [formGroup]="getBrokerForm" (ngSubmit)="sendGetBrokerRequest()">
   <input type="text" formControlName="broker_id" /> &nbsp;
   <span
@@ -9,14 +8,20 @@
       this.getBrokerForm.controls['broker_id'].touched
     "
   >
-    Broker id is required</span
+   Broker id is required</span
   >&nbsp;
   <button type="submit" [disabled]="this.getBrokerForm.invalid">
     Get Broker
   </button>
 </form>
-
 <hr />
+<p>Upload image</p>
+<form [formGroup]="imageUploadForm" (ngSubmit)="uploadImage()">
+  <label for="Image">Image</label>
+  <input type="file" formControlName="image" (change)="onFileChanged($event)">
+  <button type="submit">Upload</button>
+</form>
+<hr/>
 <p *ngIf="broker != null">
   <span>{{ broker.id }} </span> -> <span>{{ broker.brokerCode }} </span> ->
   <span>{{ broker.brokerName }}</span>

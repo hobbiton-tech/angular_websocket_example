@@ -17,8 +17,13 @@ export class BrokersComponent implements OnInit {
   brokers: any;
   broker: any;
 
+  //image variable
+  selectedFile: File;
+  imageFile: any;
+
   //form
   getBrokerForm: FormGroup;
+  imageUploadForm: FormGroup;
 
   //set headers
   headers = new HttpHeaders().set('Authorization', 'luse@secure123!');
@@ -34,11 +39,16 @@ export class BrokersComponent implements OnInit {
       broker_id: ['', Validators.required],
     });
 
+    //init form
+    this.imageUploadForm = this.formBuilder.group({
+      image: ['', Validators.required],
+    });
+
     //get token
     this.getToken();
     setTimeout(() => {
       this.sendAllBrokersRequest();
-    }, 800);
+    }, 5000);
   }
   //get token
   getToken() {
@@ -69,6 +79,12 @@ export class BrokersComponent implements OnInit {
           stomp_this.broker = JSON.parse(data.body); //parse the json data as object
         }
       });
+      stomp_this.stompClient.subscribe('/images/get/result', function (data) {
+        if (data.body) {
+          console.log('image file: ' + data.body);
+          stomp_this.imageFile = JSON.parse(data.body); //parse the json data as object
+        }
+      });
     });
   }
 
@@ -80,5 +96,23 @@ export class BrokersComponent implements OnInit {
     console.log('broker id: ' + this.getBrokerForm.value.broker_id);
     let id = this.getBrokerForm.value.broker_id;
     this.stompClient.send('/app/brokers/get', {}, JSON.stringify({ id: id }));
+  }
+
+  //Gets called when the user selects an image
+  onFileChanged(event) {
+    //console.log(event.target.files[0]);
+    this.selectedFile = event.target.files[0];
+  }
+
+  //upload image
+  uploadImage() {
+    console.log('selected file: ' + this.selectedFile);
+    const uploadImageData = new FormData();
+    uploadImageData.append(
+      'imageFile',
+      this.selectedFile,
+      this.selectedFile.name
+    );
+    this.stompClient.send('/app/image/upload', {}, { data: uploadImageData });
   }
 }

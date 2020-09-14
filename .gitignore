@@ -45,7 +45,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
-./tasks.txt
-./websocket.txt
-./code.txt
-./src/app/todos/*
+.tasks.txt
+.websocket.txt
+.code.txt
+/src/app/todos/*

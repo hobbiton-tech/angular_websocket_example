@@ -1,0 +1,4 @@
+# use SOCKJS and STOMPJS
+
+- stomp methods do not parse javascript "this" explicitly define its useage
+ e.g stomp_this = this;

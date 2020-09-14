@@ -1,0 +1,2 @@
+# authenticate and connect to websocket
+# websocket crud

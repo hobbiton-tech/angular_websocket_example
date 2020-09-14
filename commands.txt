@@ -1,0 +1,17 @@
+#install angular cli
+npm install @angular/cli
+
+#create new angular app
+ng new *app_name
+--> ng new Test
+
+# generate module and component
+- ng generate module *module_name --route *route_name --module *module_name.module
+--> ng generate module test --route test module app.module
+
+
+#generate components only
+ng generate component *component_name --skipTests=true
+
+#generate services
+ng generate service *service_name
